@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>織夢資訊站</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="織夢">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f2a3c4">
 <style>
 :root{--bg:#fbf7fb;--card:#fff;--tx:#3a2f45;--mu:#8a7d96;--ac:#b769c9;--ac2:#f0dff5;--bd:#e7dcee;--ok:#3d9a6b;--dn:#d0525f;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -127,7 +135,7 @@ async function save(k){
 }
 window.addEventListener('beforeunload',e=>{if(busy){e.preventDefault();e.returnValue=''}});
 function uploadImg(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);const mt=file.type==='image/png'?'image/png':'image/jpeg';callServer('uploadImage',PW,c.toDataURL(mt,.85).split(',')[1],mt).then(res,rej)};im.onerror=()=>rej(new Error('無法讀取圖片'));im.src=r.result};r.onerror=()=>rej(new Error('讀檔失敗'));r.readAsDataURL(file)})}
-const API_URL="https://script.google.com/macros/s/AKfycbwfGnAvf728G3ryYyxam0S-xBIOXTlSzNdKKbi158t_XVh6mKB1WJbxN7lI_5XU22Mn/exec";
+const API_URL="填入你的 Apps Script 網址（結尾是 /exec）";
 const ARGS={login:['pw'],saveDoc:['pw','key','data'],uploadImage:['pw','b64','mime']};
 async function callServer(fn,...a){
   let r;
@@ -403,6 +411,7 @@ async function load(){
 }
 load();
 setInterval(()=>{if(!editMode)load()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!editMode)load()});
 </script>
 </body>
 </html>
