@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>織夢資訊站</title>
+<style>
+:root{--bg:#fbf7fb;--card:#fff;--tx:#3a2f45;--mu:#8a7d96;--ac:#b769c9;--ac2:#f0dff5;--bd:#e7dcee;--ok:#3d9a6b;--dn:#d0525f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1622;--card:#261f30;--tx:#efe7f5;--mu:#a495b3;--ac:#d18be0;--ac2:#3a2c47;--bd:#3b3049}}
+:root[data-theme="dark"]{--bg:#1b1622;--card:#261f30;--tx:#efe7f5;--mu:#a495b3;--ac:#d18be0;--ac2:#3a2c47;--bd:#3b3049}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.5}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--bd)}
+.bar{max-width:1000px;margin:auto;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bar h1{font-size:18px;margin:0;flex:1;white-space:nowrap}
+nav{display:flex;gap:6px;overflow-x:auto;max-width:1000px;margin:auto;padding:0 14px 10px}
+nav button{border:1px solid var(--bd);background:transparent;color:var(--tx);padding:6px 14px;border-radius:99px;cursor:pointer;white-space:nowrap;font-size:14px}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:1000px;margin:auto;padding:16px 14px 60px}
+h2{font-size:17px;margin:26px 0 10px;padding-left:8px;border-left:4px solid var(--ac)}
+.btn{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:5px 12px;border-radius:8px;cursor:pointer;font-size:13px}
+.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.btn.d{color:var(--dn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.item{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px;text-align:center}
+.item img,.ph{width:100%;aspect-ratio:1;object-fit:contain;border-radius:8px;background:var(--ac2);display:block}
+.ph{display:flex;align-items:center;justify-content:center;color:var(--mu);font-size:12px}
+.item .n{font-size:13px;margin-top:4px;word-break:break-all}
+.item .t{font-size:12px;color:var(--mu)}
+.acts{display:flex;gap:4px;justify-content:center;margin-top:6px}
+.acts .btn{padding:2px 8px;font-size:12px}
+.empty{color:var(--mu);font-size:13px;padding:10px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+.grp{margin-bottom:14px}.grp>b{display:block;margin-bottom:6px}
+.mon{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:12px}
+.mon strong{min-width:120px;text-align:center;font-size:17px}
+.wk{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px;margin-bottom:10px}
+.wk.now{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac2)}
+.wk header .btn{position:absolute;right:0}
+.wk header{position:relative;border:0;background:none;display:flex;justify-content:center;align-items:center;margin-bottom:8px;font-weight:600;font-size:14px}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:640px){
+.wk{padding:8px 6px}
+.four{gap:4px}
+.cell{padding:3px;font-size:11px;line-height:1.3}
+.cell .pair{flex-direction:column;gap:3px}
+.cell .pair>*{flex:none}
+.cell .mini{padding:3px;overflow-wrap:anywhere}
+.cell .sc{font-size:11px;padding:0 6px;margin-top:3px}
+.cell .empty{font-size:11px;padding:6px 0}
+}
+.cell{background:var(--ac2);border-radius:10px;padding:6px;text-align:center;font-size:12px;position:relative}
+.pair{display:flex;gap:4px}.pair>*{flex:1;min-width:0}
+.sc{display:inline-block;background:var(--ac);color:#fff;border-radius:99px;padding:0 10px;font-weight:700;margin-top:4px}
+.chips span{display:inline-block;background:var(--ac2);border-radius:99px;padding:1px 10px;margin:2px;font-size:12px}
+.five{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin-top:8px}
+.lab{font-size:11px;color:var(--ac);font-weight:700}
+details{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:center;justify-content:center;padding:14px}
+.md{background:var(--card);color:var(--tx);border-radius:16px;padding:16px;width:100%;max-width:440px;max-height:90%;overflow:auto}
+.md h3{margin:0 0 10px}.md label{display:block;font-size:13px;margin:10px 0 3px;color:var(--mu)}
+.md input[type=text],.md select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:14px}
+.md .ck{display:inline-flex;align-items:center;gap:4px;margin:3px 8px 3px 0;font-size:13px;color:var(--tx)}
+.md .row{display:grid;grid-template-columns:1fr 1fr 56px;gap:4px;margin-bottom:8px;align-items:center}
+.pt{font-size:12px;font-weight:700;color:var(--ac);text-align:center}
+.md .foot{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.md img{max-width:100px;border-radius:8px;margin-top:6px}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:8px 16px;border-radius:99px;font-size:13px;z-index:30;display:none}
+.item.sel{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac2)}
+.r-rose{background:#f2a3c4;color:#3a2f45}.r-none{background:var(--card)}
+.mini{border-radius:8px;padding:4px;min-width:0}
+.mini img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:6px;background:var(--ac2);display:block}
+.r-gold{background:#f2cf5b;color:#3a2f45}.r-purple{background:#c9a2e6;color:#3a2f45}.r-blue{background:#8fbdf0;color:#3a2f45}
+.rar{display:flex;gap:12px;margin-top:4px}.sw{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;box-shadow:0 0 0 1px var(--bd)}
+.sw.sel{border-color:var(--tx)}
+.r-rose .lab,.r-gold .lab{color:#5a2d4a}
+.grid.wf{grid-template-columns:repeat(8,minmax(0,1fr))}
+@media(max-width:640px){
+.grid.wf{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.grid.wf .item{padding:4px}
+.grid.wf .n{font-size:11px;overflow-wrap:anywhere}
+.grid.wf .t{font-size:10px}
+.grid.wf .acts{flex-direction:column;gap:3px}
+.grid.wf .acts .btn{padding:2px 4px;font-size:11px}
+}
+.gray{color:#9c9c9c!important;font-style:italic}
+.grid.ev{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.subnav{display:flex;gap:6px;margin-bottom:12px}
+.subnav button{border:1px solid var(--bd);background:transparent;color:var(--tx);padding:5px 16px;border-radius:8px;cursor:pointer;font-size:14px}
+.subnav button.on{background:var(--ac2);border-color:var(--ac);font-weight:600}
+.note{background:var(--ac2);border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar"><h1>🌸 織夢資訊站</h1><span id="adm"></span></div>
+  <nav id="nav"></nav>
+</header>
+<main id="app"><div class="empty">載入中…</div></main>
+<div id="toast"></div>
+<div id="busy" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:25;background:rgba(0,0,0,.4);color:#fff;font-size:16px;font-weight:600">⏳ 資料儲存中，請稍候…</div>
+<script>
+const RS={gold:8,purple:6,blue:4};
+const TABS=['織夢週曆','織夢花','織夢商店','週花','活動'];
+let subTab='big',loaded=false;
+const S={flowers:{dream:[],comp:[],draw:[],extract:[],outfit:[]},weeks:{w:{}},shops:{list:[]},other:{weekFlowers:[],events:[]}};
+let openF='',openE='',db=null,assets=null,isAdmin=false,editMode=false,tab=0,cur=new Date();cur.setDate(1);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2200)};
+const img=id=>id?`<img src="https://drive.google.com/thumbnail?id=${esc(id)}&sz=w600" loading="lazy" alt="">`:`<div class="ph">無圖</div>`;
+const adm=()=>isAdmin&&editMode;
+const find=(l,id)=>l.find(x=>x.id===id);
+
+let PW='';
+let busy=0;const snap={};
+const snapAll=()=>Object.keys(S).forEach(k=>snap[k]=JSON.stringify(S[k]));
+async function save(k){
+  busy++;$('#busy').style.display='flex';
+  try{await callServer('saveDoc',PW,k,S[k]);snap[k]=JSON.stringify(S[k])}
+  catch(e){S[k]=JSON.parse(snap[k]);toast('儲存失敗，變更未套用：'+e.message);throw e}
+  finally{busy--;if(!busy)$('#busy').style.display='none'}
+}
+window.addEventListener('beforeunload',e=>{if(busy){e.preventDefault();e.returnValue=''}});
+function uploadImg(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);const mt=file.type==='image/png'?'image/png':'image/jpeg';callServer('uploadImage',PW,c.toDataURL(mt,.85).split(',')[1],mt).then(res,rej)};im.onerror=()=>rej(new Error('無法讀取圖片'));im.src=r.result};r.onerror=()=>rej(new Error('讀檔失敗'));r.readAsDataURL(file)})}
+const API_URL="https://script.google.com/macros/s/AKfycbwfGnAvf728G3ryYyxam0S-xBIOXTlSzNdKKbi158t_XVh6mKB1WJbxN7lI_5XU22Mn/exec";
+const ARGS={login:['pw'],saveDoc:['pw','key','data'],uploadImage:['pw','b64','mime']};
+async function callServer(fn,...a){
+  let r;
+  try{
+    if(fn==='getAll')r=await fetch(API_URL+'?t='+Date.now());
+    else{const body={action:fn};ARGS[fn].forEach((k,i)=>body[k]=a[i]);r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})}
+  }catch(e){throw new Error('無法連線到伺服器')}
+  let j;try{j=await r.json()}catch(e){throw new Error('伺服器回應異常')}
+  if(!j.ok)throw new Error(j.error||'伺服器錯誤');
+  return j.data;
+}
+
+/* ---------- 通用表單 ---------- */
+function form({title,fields,vals={},onSave}){
+  const ov=document.createElement('div');ov.className='ov';
+  const fh=fields.map(f=>{
+    const v=vals[f.k];
+    if(f.t==='pw')return `<label>${f.l}</label><input type="password" data-k="${f.k}" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)">`;
+    if(f.t==='week')return `<label>${f.l}</label><input type="date" data-k="${f.k}" value="${esc(v||'')}" style="width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:14px"><div class="hint" data-h style="font-size:12px;color:var(--mu);margin-top:4px"></div>`;
+    if(f.t==='rar')return `<label>${f.l}</label><div class="rar">${(f.o||[['gold','#f2cf5b'],['purple','#c9a2e6'],['blue','#8fbdf0']]).map(([k,c])=>`<span class="sw ${v===k?'sel':''}" data-r="${k}" style="background:${c}"></span>`).join('')}</div>`;
+    if(f.t==='text')return `<label>${f.l}</label><input type="text" data-k="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||'')}">`;
+    if(f.t==='img')return `<label>${f.l}</label>${v?img(v):''}<input type="file" accept="image/*" data-k="${f.k}">`+(assets?'':'<div class="empty">目前無上傳權限</div>');
+    if(f.t==='checks')return `<label>${f.l}</label>`+(f.opts.length?f.opts.map(o=>`<label class="ck"><input type="checkbox" data-k="${f.k}" value="${o.id}" ${(v||[]).includes(o.id)?'checked':''}>${esc(o.name)}</label>`).join(''):'<div class="empty">尚無織夢花可選</div>');
+  }).join('');
+  ov.innerHTML=`<div class="md"><h3>${title}</h3>${fh}<div class="foot"><button class="btn" data-x>取消</button><button class="btn p" data-ok>儲存</button></div></div>`;
+  document.body.appendChild(ov);
+  ov.querySelectorAll('input[type=date]').forEach(inp=>{const h=inp.parentNode.querySelector('[data-h]');const u=()=>{if(!inp.value){h.textContent='請選擇該週的起始日（週一）';return}const m=monday(parseD(inp.value));let msg='';if(key(m)!==inp.value){inp.value=key(m);msg='起始日限週一，已調整為 '+(m.getMonth()+1)+'/'+m.getDate()+'。'}h.textContent=msg+'顯示為：'+rangeText(inp.value)};inp.onchange=u;u()});
+  ov.querySelectorAll('.sw').forEach(w=>w.onclick=()=>{const on=w.classList.contains('sel');ov.querySelectorAll('.sw').forEach(x=>x.classList.remove('sel'));if(!on)w.classList.add('sel')});
+  ov.querySelector('[data-x]').onclick=()=>ov.remove();
+  ov.querySelector('[data-ok]').onclick=async e=>{
+    const lock=v=>{ov.querySelectorAll('input,select,button').forEach(x=>x.disabled=v);e.target.textContent=v?'儲存中…':'儲存'};
+    lock(true);
+    try{
+      const out={};
+      for(const f of fields){
+        if(f.t==='text'||f.t==='pw')out[f.k]=ov.querySelector(`[data-k="${f.k}"]`).value.trim();
+        if(f.t==='week')out[f.k]=ov.querySelector(`[data-k="${f.k}"]`).value;
+        if(f.t==='rar')out[f.k]=ov.querySelector('.sw.sel')?.dataset.r||'';
+        if(f.t==='checks')out[f.k]=[...ov.querySelectorAll(`[data-k="${f.k}"]:checked`)].map(x=>x.value);
+        if(f.t==='img'){
+          const fi=ov.querySelector(`[data-k="${f.k}"]`).files[0];
+          if(fi){out[f.k]=await uploadImg(fi)}else out[f.k]=vals[f.k]||'';
+        }
+      }
+      await onSave(out);ov.remove();
+    }catch(err){toast('失敗：'+(err.message||err.code||err));lock(false)}
+  };
+}
+const confirmDel=m=>confirm(m||'確定刪除？');
+
+/* ---------- 渲染 ---------- */
+function itemCard(x,list,extra=''){
+  return `<div class="item${x.rar?' r-'+esc(x.rar):list==='dream'?' r-rose':''}">${img(x.img)}<div class="n">${esc(x.name)}</div>${x.time?`<div class="t">${esc(x.time)}</div>`:''}${extra}${adm()?`<div class="acts"><button class="btn" data-a="edit" data-l="${list}" data-id="${x.id}">編輯</button><button class="btn d" data-a="del" data-l="${list}" data-id="${x.id}">刪除</button></div>`:''}</div>`;
+}
+const parseD=t=>{const [y,m,d]=t.split('-').map(Number);return new Date(y,m-1,d)};
+const rangeText=t=>{const d=parseD(t),e=new Date(d);e.setDate(e.getDate()+6);return `${d.getMonth()+1}/${d.getDate()}-${e.getMonth()+1}/${e.getDate()}`};
+const monday=d=>{const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
+const key=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+function renderCal(){
+  const y=cur.getFullYear(),m=cur.getMonth();
+  let d=monday(new Date(y,m,1));const end=new Date(y,m+1,0);
+  const nowK=key(monday(new Date()));let h=`<div class="mon"><button class="btn" data-a="pm">◀</button><strong>${y} 年 ${m+1} 月</strong><button class="btn" data-a="nm">▶</button><button class="btn" data-a="today">本週</button></div>`;
+  while(d<=end){
+    const k=key(d),e=new Date(d);e.setDate(e.getDate()+6);
+    const g=S.weeks.w[k]||[];
+    let cells='';
+    for(let i=0;i<4;i++){
+      const c=g[i];const f=c&&find(S.flowers.dream,c.f),p=c&&find(S.flowers.comp,c.c);
+      cells+=`<div class="cell">${c&&(f||p)?`<div class="pair"><div class="mini r-rose">${img(f?.img)}<div>${esc(f?.name||'—')}</div></div><div class="mini ${p?.rar?'r-'+esc(p.rar):'r-none'}">${img(p?.img)}<div>${esc(p?.name||'—')}</div></div></div>${RS[p?.rar]?`<span class="sc">${RS[p.rar]}分</span>`:''}`:'<div class="empty">未設定</div>'}</div>`;
+    }
+    h+=`<div class="wk ${k===nowK?'now':''}"><header><span>${d.getMonth()+1}/${d.getDate()} – ${e.getMonth()+1}/${e.getDate()}${k===nowK?' ・本週':''}</span>${adm()?`<button class="btn p" data-a="wedit" data-k="${k}">編輯雙倍果</button>`:''}</header><div class="four">${cells}</div></div>`;
+    d=new Date(d);d.setDate(d.getDate()+7);
+  }
+  return h;
+}
+function weekEditor(k){
+  const g=S.weeks.w[k]||[];const ov=document.createElement('div');ov.className='ov';
+  const opts=S.flowers.dream.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join('');
+  let rows='';
+  for(let i=0;i<4;i++){rows+=`<div class="row" data-i="${i}"><select class="f"><option value="">織夢花</option>${opts}</select><select class="c"></select><span class="pt"></span></div>`}
+  ov.innerHTML=`<div class="md"><h3>${k} 起的雙倍果</h3>${rows}<div class="foot"><button class="btn" data-x>取消</button><button class="btn p" data-ok>儲存</button></div></div>`;
+  document.body.appendChild(ov);
+  const upd=r=>{const p=find(S.flowers.comp,r.querySelector('.c').value);r.querySelector('.pt').textContent=p?(RS[p.rar]?RS[p.rar]+'分':'未設等級'):''};
+  const fill=r=>{const fid=r.querySelector('.f').value,cs=r.querySelector('.c'),old=cs.value;
+    cs.innerHTML='<option value="">伴生花</option>'+S.flowers.comp.filter(c=>c.parent===fid).map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');cs.value=old;upd(r)};
+  ov.querySelectorAll('.row').forEach(r=>{const c=g[+r.dataset.i];
+    if(c){r.querySelector('.f').value=c.f||'';fill(r);r.querySelector('.c').value=c.c||'';upd(r)}else fill(r);
+    r.querySelector('.f').onchange=()=>{r.querySelector('.c').value='';fill(r)};r.querySelector('.c').onchange=()=>upd(r)});
+  ov.querySelector('[data-x]').onclick=()=>ov.remove();
+  ov.querySelector('[data-ok]').onclick=async e=>{
+    const lock=v=>{ov.querySelectorAll('select,button').forEach(x=>x.disabled=v);e.target.textContent=v?'儲存中…':'儲存'};
+    lock(true);
+    S.weeks.w[k]=[...ov.querySelectorAll('.row')].map(r=>({f:r.querySelector('.f').value,c:r.querySelector('.c').value}));
+    try{await save('weeks');ov.remove();render()}catch(_){lock(false)}
+  };
+}
+
+function renderFlowersView(){
+  const F=S.flowers;
+  const f=find(F.dream,openF);
+  const grid=(l,t,list)=>`<h2>${t}</h2><div class="grid">${list.map(x=>itemCard(x,l)).join('')||'<div class="empty">尚無資料</div>'}</div>`;
+  let h=`<h2>織夢花</h2><div class="empty" style="padding-top:0">點選織夢花，查看對應的伴生花與抽獎內容。</div><div class="grid">${F.dream.map(x=>`<div class="item r-rose ${x.id===openF?'sel':''}" data-a="openf" data-id="${x.id}" style="cursor:pointer">${img(x.img)}<div class="n">${esc(x.name)}</div></div>`).join('')||'<div class="empty">尚無資料</div>'}</div>`;
+  if(f)h+=`<div class="card" id="fpanel" style="margin-top:14px"><b style="font-size:16px">${esc(f.name)}</b>${grid('comp','伴生花',F.comp.filter(c=>c.parent===f.id))}${grid('draw','抽獎',(F.draw||[]).filter(c=>c.parent===f.id))}</div>`;
+  return h;
+}
+function renderFlowers(){
+  if(!adm())return renderFlowersView();
+  const F=S.flowers;const add=(l,t)=>adm()?`<button class="btn p" data-a="add" data-l="${l}">＋ 新增${t}</button>`:'';
+  const sec=(l,t)=>`<h2>${t}</h2>${add(l,t)}<div class="grid" style="margin-top:10px">${F[l].map(x=>itemCard(x,l)).join('')||'<div class="empty">尚無資料</div>'}</div>`;
+  let h=sec('dream','織夢花');
+  h+='<h2>伴生花</h2>';
+  h+=F.dream.map(f=>{const cs=F.comp.filter(c=>c.parent===f.id);
+    return `<div class="card grp"><b>${esc(f.name)} 的伴生花（${cs.length}/5）</b><div class="grid">${cs.map(c=>itemCard(c,'comp')).join('')||'<div class="empty">尚無資料</div>'}</div>${adm()&&cs.length<5?`<div style="margin-top:8px"><button class="btn p" data-a="addc" data-id="${f.id}">＋ 新增伴生花</button></div>`:''}</div>`}).join('')||'<div class="empty">請先新增織夢花</div>';
+  h+='<h2>抽獎</h2><div class="note">每朵織夢花可新增最多 7 個抽獎內容。</div>';
+  h+=F.dream.map(f=>{const ds=(F.draw||[]).filter(c=>c.parent===f.id);
+    return `<div class="card grp"><b>${esc(f.name)} 的抽獎（${ds.length}/7）</b><div class="grid">${ds.map(c=>itemCard(c,'draw')).join('')||'<div class="empty">尚無資料</div>'}</div>${adm()&&ds.length<7?`<div style="margin-top:8px"><button class="btn p" data-a="addc" data-l="draw" data-id="${f.id}">＋ 新增抽獎內容</button></div>`:''}</div>`}).join('')||'<div class="empty">請先新增織夢花</div>';
+  const old=[...(F.extract||[]).map(x=>[x,'extract']),...(F.outfit||[]).map(x=>[x,'outfit'])];
+  if(adm()&&old.length)h+=`<h2>舊資料（抽出花／服裝及裝飾）</h2><div class="note">這些是合併前的舊資料，不會顯示給訪客。請重新建立到上方的抽獎後，再刪除這裡的項目。</div><div class="grid">${old.map(([x,l])=>itemCard(x,l)).join('')}</div>`;
+  return h;
+}
+
+const SLOTS=[['a','5999分','r-rose'],['b','3688分','r-rose'],['c','1288分','r-gold'],['c2','1288分','r-gold'],['c3','1288分','r-gold'],['d','花瓶',''],['e','時裝','']];
+const NUM={c:' ①',c2:' ②',c3:' ③'};
+function renderShop(){
+  let h=adm()?'<button class="btn p" data-a="addshop">＋ 新增商店</button>':'';
+  h+=S.shops.list.map(s=>{
+    const fl=(s.cycle||[]).map(id=>find(S.flowers.dream,id)).filter(Boolean);
+    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">${esc(s.name)}</b>${adm()?`<span class="acts"><button class="btn" data-a="editshop" data-id="${s.id}">編輯商店</button><button class="btn d" data-a="delshop" data-id="${s.id}">刪除</button></span>`:''}</div>
+    <div class="chips"><span class="lab" style="background:none">週期織夢花</span>${fl.map(f=>`<span>${esc(f.name)}</span>`).join('')||'<span>未設定</span>'}</div>
+    <div class="five">${SLOTS.map(([k,l,cl])=>{const it=(s.items||{})[k]||{};
+      return `<div class="item ${cl}"><div class="lab">${l}</div>${img(it.img)}<div class="n">${esc(it.name||'—')}</div>${adm()?`<div class="acts"><button class="btn" data-a="slot" data-id="${s.id}" data-s="${k}" data-n="${l}${NUM[k]||''}">編輯</button></div>`:''}</div>`}).join('')}</div></div>`}).join('')||'<div class="empty">尚無商店</div>';
+  return h;
+}
+/* ---------- 活動 ---------- */
+const curY=()=>new Date().getFullYear();
+const fmtD=(t,y)=>{const d=parseD(t);return (y?d.getFullYear()+'/':'')+(d.getMonth()+1)+'/'+d.getDate()};
+const rngTxt=(a,b)=>{const y=parseD(a).getFullYear()!==curY()||(b&&parseD(b).getFullYear()!==curY());return b&&b!==a?fmtD(a,y)+'-'+fmtD(b,y):fmtD(a,y)};
+const estTxt=x=>x.et||(x.em?(x.em.slice(0,4)==curY()?'':x.em.slice(0,4)+'年')+Number(x.em.slice(5))+'月':'');
+const subKey=x=>x.tmode==='est'?(x.em||''):(x.start||'');
+const evKey=e=>{const k=(e.subs||[]).map(subKey).filter(Boolean).sort();return k[0]||''};
+const byDesc=f=>(a,b)=>f(b).localeCompare(f(a));
+const subTime=x=>x.tmode==='est'?`<span class="gray">${esc(estTxt(x))}（預估）</span>`:esc(rngTxt(x.start,x.end));
+function evTime(e){
+  const s=e.subs||[],cal=s.filter(x=>x.tmode!=='est'&&x.start),es=s.filter(x=>x.tmode==='est'&&(x.em||x.et));let h='';
+  if(cal.length){const a=cal.map(x=>x.start).sort()[0],b=cal.map(x=>x.end||x.start).sort().pop();h+=`<div class="t">${esc(rngTxt(a,b))}</div>`}
+  if(es.length)h+=`<div class="t gray">${esc([...new Set(es.map(estTxt))].join('、'))}（預估）</div>`;
+  return h||'<div class="t gray">時間未定</div>';
+}
+const evCover=e=>{for(const s of [...(e.subs||[])].sort(byDesc(subKey)))for(const c of s.contents||[])if(c.cover&&c.img)return c.img;return ''};
+const subCard=(e,x)=>`<div class="card" style="background:var(--bg)"><div style="font-weight:600;margin-bottom:6px">${subTime(x)}</div><div class="chips">${[x.fo?(x.fo==='其他'?(x.fx||'其他'):x.fo):'',...(x.cats||[])].filter(Boolean).map(t=>`<span>${esc(t)}</span>`).join('')}</div><div class="grid" style="margin-top:8px">${(x.contents||[]).map(c=>`<div class="item ${c.rar?'r-'+esc(c.rar):''}">${img(c.img)}<div class="n">${esc(c.name)}</div></div>`).join('')||'<div class="empty">尚無內容</div>'}</div>${adm()?`<div class="acts" style="justify-content:flex-start;margin-top:8px"><button class="btn" data-a="editsub" data-e="${e.id}" data-id="${x.id}">編輯</button><button class="btn d" data-a="delsub" data-e="${e.id}" data-id="${x.id}">刪除</button></div>`:''}</div>`;
+function renderEvents(){
+  const all=(S.other.events||[]).filter(e=>(e.cat||'big')===subTab),evs=[...all].sort(byDesc(evKey)),cur=find(all,openE);
+  let h=`<div class="subnav">${[['big','大型活動'],['loop','循環活動']].map(([k,t])=>`<button class="${k===subTab?'on':''}" data-a="subtab" data-s="${k}">${t}</button>`).join('')}</div><div>${adm()?'<button class="btn p" data-a="addev">＋ 新增活動</button>':''}<div class="grid ev" style="margin-top:10px">${evs.map(e=>`<div class="item ${e.id===openE?'sel':''}" data-a="openev" data-id="${e.id}" style="cursor:pointer">${img(evCover(e))}<div class="n">${esc(e.name)}</div>${e.sub?`<div class="t">${esc(e.sub)}</div>`:''}${evTime(e)}</div>`).join('')||'<div class="empty">尚無活動</div>'}</div>`;
+  if(cur)h+=`<div class="card" id="evpanel" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:flex-start"><div><b style="font-size:17px">${esc(cur.name)}</b>${cur.sub?`<div class="t">${esc(cur.sub)}</div>`:''}${evTime(cur)}</div>${adm()?`<span class="acts"><button class="btn" data-a="editev" data-id="${cur.id}">編輯活動</button><button class="btn d" data-a="delev" data-id="${cur.id}">刪除活動</button></span>`:''}</div>${adm()?`<div style="margin:10px 0"><button class="btn p" data-a="addsub" data-e="${cur.id}">＋ 新增小活動</button></div>`:'<div style="height:10px"></div>'}${[...(cur.subs||[])].sort(byDesc(subKey)).map(x=>subCard(cur,x)).join('')||'<div class="empty">尚無小活動</div>'}</div>`;
+  return h+'</div>';
+}
+
+function subEditor(eid,sid){
+  const ev0=find(S.other.events,eid),cur=(sid&&ev0&&find(ev0.subs,sid))||{tmode:'cal',contents:[]};
+  const FO=['氪金抽','鑽石抽','氪金遊戲','鑽石遊戲','其他'],CT=['花朵','服裝','傢具'];
+  const COL=[['rose','#f2a3c4'],['gold','#f2cf5b'],['purple','#c9a2e6'],['blue','#8fbdf0']];
+  const inp='width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:14px';
+  const ov=document.createElement('div');ov.className='ov';
+  ov.innerHTML=`<div class="md" style="max-width:520px"><h3>${sid?'編輯':'新增'}小活動</h3>
+  <label>活動時間</label><label class="ck"><input type="radio" name="tm" value="cal" ${cur.tmode!=='est'?'checked':''}>日曆選擇</label><label class="ck"><input type="radio" name="tm" value="est" ${cur.tmode==='est'?'checked':''}>預估時間</label>
+  <div data-t="cal"><label>開始日期</label><input type="date" id="s1" value="${esc(cur.start||'')}" style="${inp}"><label>結束日期（選填）</label><input type="date" id="s2" value="${esc(cur.end||'')}" style="${inp}"></div>
+  <div data-t="est"><label>預估月份</label><input type="month" id="s3" value="${esc(cur.em||'')}" style="${inp}"><label>顯示文字（選填）</label><input type="text" id="s4" value="${esc(cur.et||'')}" placeholder="例：10月上旬"></div>
+  <label>活動形式</label>${FO.map(x=>`<label class="ck"><input type="radio" name="fo" value="${x}" ${cur.fo===x?'checked':''}>${x}</label>`).join('')}<input type="text" id="s5" value="${esc(cur.fx||'')}" placeholder="選「其他」時請填寫" style="margin-top:6px">
+  <label>獎勵類型（可複選）</label>${CT.map(x=>`<label class="ck"><input type="checkbox" name="ct" value="${x}" ${(cur.cats||[]).includes(x)?'checked':''}>${x}</label>`).join('')}
+  <label>活動內容</label><div id="rows"></div><button class="btn" id="addrow" type="button">＋ 新增內容</button>
+  <div class="foot"><button class="btn" data-x>取消</button><button class="btn p" data-ok>儲存</button></div></div>`;
+  const rows=ov.querySelector('#rows');
+  const mk=c=>{const d=document.createElement('div');d.className='crow';d.dataset.id=c.id||uid();d.dataset.img=c.img||'';
+    d.style.cssText='border:1px solid var(--bd);border-radius:10px;padding:8px;margin-bottom:8px';
+    d.innerHTML=`<input type="text" class="cn" placeholder="名稱" value="${esc(c.name||'')}">${c.img?img(c.img):''}<input type="file" accept="image/*" class="cf" style="margin-top:6px"><div class="rar" style="margin-top:8px">${COL.map(([k,cl])=>`<span class="sw ${c.rar===k?'sel':''}" data-r="${k}" style="background:${cl}"></span>`).join('')}</div><label class="ck"><input type="checkbox" class="cc" ${c.cover?'checked':''}>作為活動顯示圖片</label> <button class="btn d cx" type="button">移除</button>`;
+    rows.appendChild(d)};
+  (cur.contents||[]).forEach(mk);
+  const sync=()=>{const m=ov.querySelector('[name=tm]:checked').value;ov.querySelector('[data-t=cal]').style.display=m==='cal'?'':'none';ov.querySelector('[data-t=est]').style.display=m==='est'?'':'none'};
+  sync();
+  ov.addEventListener('click',e=>{const t=e.target;
+    if(t.classList.contains('sw')){const on=t.classList.contains('sel');t.parentNode.querySelectorAll('.sw').forEach(x=>x.classList.remove('sel'));if(!on)t.classList.add('sel')}
+    if(t.classList.contains('cx'))t.closest('.crow').remove();
+    if(t.id==='addrow')mk({});
+  });
+  ov.addEventListener('change',e=>{const t=e.target;
+    if(t.classList.contains('cc')&&t.checked)ov.querySelectorAll('.cc').forEach(x=>{if(x!==t)x.checked=false});
+    if(t.name==='tm')sync();
+  });
+  document.body.appendChild(ov);
+  ov.querySelector('[data-x]').onclick=()=>ov.remove();
+  ov.querySelector('[data-ok]').onclick=async e=>{
+    const lock=v=>{ov.querySelectorAll('input,select,button').forEach(x=>x.disabled=v);e.target.textContent=v?'儲存中…':'儲存'};
+    try{
+      const g=id=>ov.querySelector('#'+id).value,tm=ov.querySelector('[name=tm]:checked').value;
+      const o={tmode:tm,start:'',end:'',em:'',et:''};
+      if(tm==='cal'){o.start=g('s1');o.end=g('s2');if(!o.start)throw new Error('請選擇開始日期');if(o.end&&o.end<o.start)throw new Error('結束日期不可早於開始日期')}
+      else{o.em=g('s3');o.et=g('s4').trim();if(!o.em)throw new Error('請選擇預估月份')}
+      const fo=ov.querySelector('[name=fo]:checked');o.fo=fo?fo.value:'';o.fx=o.fo==='其他'?g('s5').trim():'';
+      o.cats=[...ov.querySelectorAll('[name=ct]:checked')].map(x=>x.value);
+      const raw=[...rows.children].map(r=>({id:r.dataset.id,name:r.querySelector('.cn').value.trim(),img:r.dataset.img,file:r.querySelector('.cf').files[0],rar:(r.querySelector('.sw.sel')||{dataset:{}}).dataset.r||'',cover:r.querySelector('.cc').checked})).filter(c=>c.name||c.img||c.file);
+      lock(true);
+      for(const c of raw){if(c.file)c.img=await uploadImg(c.file);delete c.file}
+      o.contents=raw;
+      const ev=find(S.other.events,eid);if(!ev)throw new Error('找不到此活動');
+      if(sid){const sb=find(ev.subs,sid);if(!sb)throw new Error('找不到此小活動');Object.assign(sb,o)}else ev.subs.push({id:uid(),...o});
+      await save('other');ov.remove();render();
+    }catch(err){toast('失敗：'+(err.message||err));lock(false)}
+  };
+}
+
+function renderWf(){
+  const w=S.other.weekFlowers;
+  return `${adm()?'<button class="btn p" data-a="add" data-l="wf">＋ 新增週花</button>':''}<div class="grid wf" style="margin-top:10px">${[...w].sort((a,b)=>(b.start||'').localeCompare(a.start||'')).map(x=>itemCard({...x,time:x.start?rangeText(x.start):x.time},'wf')).join('')||'<div class="empty">尚無資料</div>'}</div>`;
+}
+
+function render(){
+  $('#nav').innerHTML=TABS.map((t,i)=>`<button class="${i===tab?'on':''}" data-a="tab" data-i="${i}">${t}</button>`).join('');
+  $('#adm').innerHTML=isAdmin?`<button class="btn ${editMode?'p':''}" data-a="mode">${editMode?'✎ 後台編輯中（點此離開）':'⚙ 進入後台'}</button> <button class="btn" data-a="logout">登出</button>`:'<button class="btn" data-a="login">輸入密碼編輯</button>';
+  if(!db){$('#app').innerHTML='<div class="empty">讀取資料失敗，請確認網址設定或重新整理頁面。</div>';return}
+  if(!loaded){$('#app').innerHTML='<div class="empty">載入中…</div>';return}
+  $('#app').innerHTML=[renderCal,renderFlowers,renderShop,renderWf,renderEvents][tab]();
+}
+
+/* ---------- 事件 ---------- */
+const LISTS={dream:['flowers','織夢花'],comp:['flowers','伴生花'],extract:['flowers','抽出花'],outfit:['flowers','服裝及裝飾'],draw:['flowers','抽獎'],wf:['other','週花']};
+const arr=l=>l==='wf'?S.other.weekFlowers:S.flowers[l];
+const itemFields=l=>[{k:'name',t:'text',l:'名稱'},{k:'img',t:'img',l:'照片'}].concat(l==='comp'?[{k:'rar',t:'rar',l:'等級'}]:[]).concat(l==='wf'?[{k:'rar',t:'rar',l:'底色',o:[['gold','#f2cf5b'],['purple','#c9a2e6']]},{k:'start',t:'week',l:'週花起始日（限週一）'}]:[]);
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id,l=b.dataset.l;
+  if(a==='login')return form({title:'輸入編輯密碼',fields:[{k:'pw',t:'pw',l:'密碼'}],onSave:async v=>{await callServer('login',v.pw);PW=v.pw;isAdmin=true;assets=true;render()}});
+  if(a==='logout'){editMode=false;isAdmin=false;assets=false;PW='';render();return}
+  if(a==='subtab'){subTab=b.dataset.s;openE='';return render()}
+  if(a==='openev'){openE=openE===id?'':id;render();const p=document.getElementById('evpanel');if(p)p.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  if(a==='addev'||a==='editev'){const ed=a==='editev';return form({title:ed?'編輯活動':'新增活動',fields:[{k:'name',t:'text',l:'活動名稱'},{k:'sub',t:'text',l:'副標題（選填）'}],vals:ed?{...find(S.other.events,id)}:{},onSave:async v=>{if(!v.name)throw new Error('請輸入活動名稱');if(ed)Object.assign(find(S.other.events,id),v);else{const n={id:uid(),subs:[],cat:subTab,...v};S.other.events.push(n);openE=n.id}await save('other');render()}})}
+  if(a==='delev'){if(!confirmDel('確定刪除此活動與其所有小活動？'))return;S.other.events=S.other.events.filter(x=>x.id!==id);openE='';save('other').catch(()=>{}).finally(render);return}
+  if(a==='addsub'||a==='editsub')return subEditor(b.dataset.e,a==='editsub'?id:'');
+  if(a==='delsub'){if(!confirmDel('確定刪除此小活動？'))return;const ev=find(S.other.events,b.dataset.e);ev.subs=ev.subs.filter(x=>x.id!==id);save('other').catch(()=>{}).finally(render);return}
+  if(a==='tab'){tab=+b.dataset.i;return render()}
+  if(a==='mode'){editMode=!editMode;return render()}
+  if(a==='openf'){openF=openF===id?'':id;render();const p=document.getElementById('fpanel');if(p)p.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  if(a==='pm'){cur.setMonth(cur.getMonth()-1);return render()}
+  if(a==='nm'){cur.setMonth(cur.getMonth()+1);return render()}
+  if(a==='today'){cur=new Date();cur.setDate(1);return render()}
+  if(a==='wedit')return weekEditor(b.dataset.k);
+  if(a==='add'||a==='addc'){
+    const ll=a==='addc'?(l||'comp'):l;
+    return form({title:'新增'+LISTS[ll][1],fields:itemFields(ll),onSave:async v=>{
+      const o={id:uid(),...v};if(a==='addc')o.parent=id;arr(ll).push(o);await save(LISTS[ll][0]);render()}});
+  }
+  if(a==='edit'){
+    return form({title:'編輯'+LISTS[l][1],fields:itemFields(l),vals:{...find(arr(l),id)},onSave:async v=>{Object.assign(find(arr(l),id),v);await save(LISTS[l][0]);render()}});}
+  if(a==='del'){if(!confirmDel())return;const A=arr(l);
+    if(l==='dream'){S.flowers.comp=S.flowers.comp.filter(c=>c.parent!==id);S.flowers.draw=(S.flowers.draw||[]).filter(c=>c.parent!==id)}
+    A.splice(A.findIndex(x=>x.id===id),1);save(LISTS[l][0]).catch(()=>{}).finally(render);return}
+  if(a==='addshop'||a==='editshop'){
+    const s=a==='editshop'?find(S.shops.list,id):null;
+    return form({title:s?'編輯商店':'新增商店',fields:[{k:'name',t:'text',l:'商店名稱'},{k:'cycle',t:'checks',l:'商店週期（勾選織夢花）',opts:S.flowers.dream}],vals:s||{},
+      onSave:async v=>{if(a==='editshop')Object.assign(find(S.shops.list,id),v);else S.shops.list.push({id:uid(),items:{},...v});await save('shops');render()}});
+  }
+  if(a==='delshop'){if(!confirmDel('確定刪除此商店？'))return;S.shops.list=S.shops.list.filter(s=>s.id!==id);save('shops').catch(()=>{}).finally(render);return}
+  if(a==='slot'){const s=find(S.shops.list,id),k=b.dataset.s;s.items=s.items||{};const it=s.items[k]||{};
+    return form({title:`${esc(s.name)}・${b.dataset.n}`,fields:itemFields('x'),vals:it,onSave:async v=>{const s2=find(S.shops.list,id);s2.items=s2.items||{};s2.items[k]=v;await save('shops');render()}});}
+});
+
+/* ---------- 啟動 ---------- */
+db=true;snapAll();render();
+async function load(){
+  if(busy)return;
+  try{const d=await callServer('getAll');if(busy)return;Object.keys(d).forEach(k=>{if(S[k])S[k]=Object.assign(S[k],d[k])});snapAll();db=true;loaded=true;if(!document.querySelector('.ov'))render()}
+  catch(e){if(!loaded){db=null;render()}}
+}
+load();
+setInterval(()=>{if(!editMode)load()},30000);
+</script>
+</body>
+</html>
