@@ -113,7 +113,7 @@ summary{cursor:pointer;font-weight:600}
 <script>
 const RS={gold:8,purple:6,blue:4};
 const TABS=['織夢週曆','織夢花','織夢商店','週花','活動'];
-let subTab='big',loaded=false;
+let subTab='big',loaded=false,lastErr='';
 const S={flowers:{dream:[],comp:[],draw:[],extract:[],outfit:[]},weeks:{w:{}},shops:{list:[]},other:{weekFlowers:[],events:[]}};
 let openF='',openE='',db=null,assets=null,isAdmin=false,editMode=false,tab=0,cur=new Date();cur.setDate(1);
 const $=s=>document.querySelector(s);
@@ -355,7 +355,7 @@ function renderWf(){
 function render(){
   $('#nav').innerHTML=TABS.map((t,i)=>`<button class="${i===tab?'on':''}" data-a="tab" data-i="${i}">${t}</button>`).join('');
   $('#adm').innerHTML=isAdmin?`<button class="btn ${editMode?'p':''}" data-a="mode">${editMode?'✎ 後台編輯中（點此離開）':'⚙ 進入後台'}</button> <button class="btn" data-a="logout">登出</button>`:'<button class="btn" data-a="login">輸入密碼編輯</button>';
-  if(!db){$('#app').innerHTML='<div class="empty">讀取資料失敗，請確認網址設定或重新整理頁面。</div>';return}
+  if(!db){$('#app').innerHTML='<div class="empty">讀取資料失敗：'+esc(lastErr)+'<br>請確認網址設定或重新整理頁面。</div>';return}
   if(!loaded){$('#app').innerHTML='<div class="empty">載入中…</div>';return}
   $('#app').innerHTML=[renderCal,renderFlowers,renderShop,renderWf,renderEvents][tab]();
 }
@@ -407,7 +407,7 @@ db=true;snapAll();render();
 async function load(){
   if(busy)return;
   try{const d=await callServer('getAll');if(busy)return;Object.keys(d).forEach(k=>{if(S[k])S[k]=Object.assign(S[k],d[k])});snapAll();db=true;loaded=true;if(!document.querySelector('.ov'))render()}
-  catch(e){if(!loaded){db=null;render()}}
+  catch(e){lastErr=e.message||String(e);if(!loaded){db=null;render()}}
 }
 load();
 setInterval(()=>{if(!editMode)load()},30000);
