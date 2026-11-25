@@ -135,7 +135,7 @@ async function save(k){
 }
 window.addEventListener('beforeunload',e=>{if(busy){e.preventDefault();e.returnValue=''}});
 function uploadImg(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);const mt=file.type==='image/png'?'image/png':'image/jpeg';callServer('uploadImage',PW,c.toDataURL(mt,.85).split(',')[1],mt).then(res,rej)};im.onerror=()=>rej(new Error('無法讀取圖片'));im.src=r.result};r.onerror=()=>rej(new Error('讀檔失敗'));r.readAsDataURL(file)})}
-const API_URL="填入你的 Apps Script 網址（結尾是 /exec）";
+const API_URL="https://script.google.com/macros/s/AKfycbz0zk2kwWZDxRwxTNUA0NrGuYC2FxJq3rRufYSNvzn1lgjAZDRZHwwIjYYugp5nyssj/exec";
 const ARGS={login:['pw'],saveDoc:['pw','key','data'],uploadImage:['pw','b64','mime']};
 async function callServer(fn,...a){
   let r;
